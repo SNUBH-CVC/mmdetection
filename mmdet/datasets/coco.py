@@ -147,6 +147,7 @@ class CocoDataset(BaseDetDataset):
                 continue
             if ann['category_id'] not in self.cat_ids:
                 continue
+            # x1y1x2y2로 변환
             bbox = [x1, y1, x1 + w, y1 + h]
 
             if ann.get('iscrowd', False):
