@@ -78,7 +78,7 @@ model = dict(
             type='HungarianAssigner',
             match_costs=[
                 dict(type='ClassificationCost', weight=1.),
-                dict(type='BBoxL1Cost', weight=5.0, box_format='xyxy'),
+                dict(type='BBoxL1Cost', weight=5.0, box_format='xywh'),
                 dict(type='IoUCost', iou_mode='giou', weight=2.0)
             ])),
     test_cfg=dict(max_per_img=100))

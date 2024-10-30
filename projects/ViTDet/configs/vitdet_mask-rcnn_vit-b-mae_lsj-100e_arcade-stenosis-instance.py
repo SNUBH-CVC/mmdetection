@@ -1,13 +1,13 @@
 _base_ = [
     '../../../configs/_base_/models/mask-rcnn_r50_fpn.py',
-    './lsj-100e_coco-instance.py',
+    './lsj-100e_arcade-stenosis-instance.py',
 ]
 
 custom_imports = dict(imports=['projects.ViTDet.vitdet'])
 
 backbone_norm_cfg = dict(type='LN', requires_grad=True)
 norm_cfg = dict(type='LN2d', requires_grad=True)
-image_size = (1024, 1024)
+image_size = (512, 512)
 batch_augments = [
     dict(type='BatchFixedSizePad', size=image_size, pad_mask=True)
 ]
@@ -18,13 +18,13 @@ model = dict(
     backbone=dict(
         _delete_=True,
         type='ViT',
-        img_size=1024,
+        img_size=512,
         patch_size=16,
         embed_dim=768,
         depth=12,
         num_heads=12,
         drop_path_rate=0.1,
-        window_size=14,
+        window_size=7,
         mlp_ratio=4,
         qkv_bias=True,
         norm_cfg=backbone_norm_cfg,
@@ -58,3 +58,6 @@ model = dict(
         mask_head=dict(norm_cfg=norm_cfg)))
 
 custom_hooks = [dict(type='Fp16CompresssionHook')]
+
+visualizer = dict(
+    type='DetLocalVisualizer', vis_backends=[dict(type='WandbVisBackend')], name='visualizer')
